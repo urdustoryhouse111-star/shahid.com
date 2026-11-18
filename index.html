@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow | To-Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <a class="brand login-brand" href="#"><span class="brand-mark">✓</span><span>Task<span class="brand-light">Flow</span></span></a>
+      <div class="login-art">✦</div>
+      <p class="eyebrow">WELCOME BACK</p>
+      <h1>Sign in to TaskFlow</h1>
+      <p class="muted login-subtitle">A little focus goes a long way. Sign in to manage your day.</p>
+      <form id="loginForm" class="login-form">
+        <label for="loginName">Your name</label>
+        <input id="loginName" type="text" placeholder="e.g. shahid" autocomplete="name" required>
+        <label for="loginEmail">Email address</label>
+        <input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter any password" required>
+        <button class="primary-button login-submit" type="submit">Sign in <span>→</span></button>
+      </form>
+      <p class="login-hint">Demo access: enter your name, any valid email, and any password.</p>
+    </div>
+  </section>
+
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="TaskFlow home"><span class="brand-mark">✓</span><span>Task<span class="brand-light">Flow</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-screen="dashboard"><span class="nav-icon">▦</span> Dashboard</button>
+        <button class="nav-link" data-screen="tasks"><span class="nav-icon">☷</span> My Tasks <span class="nav-count" id="navTaskCount">0</span></button>
+        <button class="nav-link" data-screen="add"><span class="nav-icon">＋</span> Add Task</button>
+        <button class="nav-link" data-screen="calendar"><span class="nav-icon">▣</span> Calendar</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><div class="tip-icon">✦</div><strong>Small steps, big wins.</strong><p>Stay focused and make today count.</p></div>
+        <button class="nav-link" data-screen="settings"><span class="nav-icon">⚙</span> Settings</button>
+        <div class="profile-mini"><div class="avatar" id="sidebarAvatar">U</div><div><strong id="sidebarUserName">Your name</strong><small>Personal workspace</small></div><span class="dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">✓</span> TaskFlow</div>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumbCurrent">Dashboard</strong></div>
+        <div class="topbar-actions"><span class="today-label" id="todayLabel"></span><button class="icon-button" title="Notifications" aria-label="Notifications">♧<i></i></button><div class="avatar top-avatar" id="topAvatar">U</div></div>
+      </header>
+
+      <section class="screen active" id="screen-dashboard">
+        <div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Good day, <span id="welcomeUserName">there</span> <span class="wave">✦</span></h1><p class="muted">Here’s what’s happening with your tasks today.</p></div><button class="primary-button" data-go="add">＋ <span>New task</span></button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total tasks</span><span class="stat-icon purple">☷</span></div><strong id="totalStat">0</strong><small>All your tasks</small></article>
+          <article class="stat-card"><div class="stat-top"><span>In progress</span><span class="stat-icon orange">◷</span></div><strong id="progressStat">0</strong><small>Still on your list</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Completed</span><span class="stat-icon green">✓</span></div><strong id="completedStat">0</strong><small>Great work!</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Due today</span><span class="stat-icon blue">▣</span></div><strong id="dueStat">0</strong><small>Keep an eye on these</small></article>
+        </div>
+        <div class="content-grid">
+          <section class="panel task-panel"><div class="panel-heading"><div><h2>Today's tasks</h2><p class="muted">Your priorities at a glance</p></div><button class="text-button" data-go="tasks">View all →</button></div><div id="dashboardTasks" class="task-list"></div><div class="empty-state hidden" id="dashboardEmpty"><div class="empty-illustration">✓</div><strong>You're all caught up!</strong><p>Add a task to get your day moving.</p><button class="secondary-button" data-go="add">Create a task</button></div></section>
+          <section class="panel progress-panel"><div class="panel-heading"><div><h2>Weekly progress</h2><p class="muted">A little progress every day</p></div><span class="period-pill">This week</span></div><div class="progress-ring-wrap"><div class="progress-ring" id="progressRing"><div><strong id="completionRate">0%</strong><small>completed</small></div></div></div><div class="progress-legend"><span><i class="legend-dot done"></i> Completed <b id="legendDone">0</b></span><span><i class="legend-dot left"></i> Remaining <b id="legendLeft">0</b></span></div><div class="motivation"><span>✦</span><p><strong>Keep it up!</strong><br>Every completed task is a step forward.</p></div></section>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-tasks">
+        <div class="page-heading"><div><p class="eyebrow">YOUR WORKSPACE</p><h1>My tasks</h1><p class="muted">Organize your work and keep moving forward.</p></div><button class="primary-button" data-go="add">＋ <span>New task</span></button></div>
+        <div class="toolbar"><div class="search-wrap"><span>⌕</span><input id="taskSearch" type="search" placeholder="Search tasks..." aria-label="Search tasks"></div><select id="taskFilter" aria-label="Filter tasks"><option value="all">All tasks</option><option value="active">In progress</option><option value="completed">Completed</option></select></div>
+        <div class="panel"><div class="panel-heading"><div><h2>Task list</h2><p class="muted" id="taskListSubtitle">All your tasks in one place</p></div><span class="period-pill" id="taskCountPill">0 tasks</span></div><div id="allTasks" class="task-list"></div><div class="empty-state hidden" id="tasksEmpty"><div class="empty-illustration">☷</div><strong>No tasks found</strong><p>Try another search or add a new task.</p><button class="secondary-button" data-go="add">Add a task</button></div></div>
+      </section>
+
+      <section class="screen" id="screen-add">
+        <div class="page-heading"><div><p class="eyebrow">PLAN YOUR DAY</p><h1 id="formTitle">Add a new task</h1><p class="muted">Break your goals into clear, manageable steps.</p></div></div>
+        <div class="form-layout"><form class="panel task-form" id="taskForm">
+          <input type="hidden" id="editId">
+          <label for="taskTitle">Task title <span>*</span></label><input id="taskTitle" type="text" maxlength="80" placeholder="e.g. Prepare project presentation" required>
+          <label for="taskDescription">Description <small>(optional)</small></label><textarea id="taskDescription" rows="4" maxlength="240" placeholder="Add a few details about this task..."></textarea>
+          <div class="form-row"><div><label for="taskDate">Due date <span>*</span></label><input id="taskDate" type="date" required></div><div><label for="taskPriority">Priority</label><select id="taskPriority"><option value="Medium">Medium</option><option value="High">High</option><option value="Low">Low</option></select></div></div>
+          <label for="taskCategory">Category</label><select id="taskCategory"><option>Personal</option><option>Work</option><option>Study</option><option>Health</option><option>Other</option></select>
+          <div class="form-actions"><button type="button" class="secondary-button" id="cancelForm">Cancel</button><button type="submit" class="primary-button" id="saveTaskButton">Save task <span>→</span></button></div>
+        </form><aside class="form-aside"><div class="aside-art">✦</div><h3>Make it actionable</h3><p>Clear titles and realistic due dates make tasks easier to complete. Choose a priority to help decide what deserves your attention first.</p><div class="tip-line"><span>✓</span> Keep the title specific</div><div class="tip-line"><span>✓</span> Set a realistic deadline</div><div class="tip-line"><span>✓</span> Celebrate your progress</div></aside></div>
+      </section>
+
+      <section class="screen" id="screen-calendar">
+        <div class="page-heading"><div><p class="eyebrow">STAY ON TRACK</p><h1>Calendar</h1><p class="muted">See your tasks by their due dates.</p></div><button class="primary-button" data-go="add">＋ <span>New task</span></button></div>
+        <div class="calendar-layout"><section class="panel calendar-panel"><div class="calendar-header"><button class="icon-button" id="prevMonth" aria-label="Previous month">‹</button><h2 id="calendarMonth">Month Year</h2><button class="icon-button" id="nextMonth" aria-label="Next month">›</button></div><div class="calendar-grid" id="calendarGrid"></div></section><section class="panel selected-day-panel"><div class="panel-heading"><div><h2 id="selectedDateTitle">Selected day</h2><p class="muted">Tasks due on this date</p></div></div><div id="selectedDateTasks" class="task-list"></div><div class="empty-state compact" id="calendarEmpty"><div class="empty-illustration">▣</div><strong>No tasks for this day</strong><p>Enjoy the extra breathing room.</p></div></section></div>
+      </section>
+
+      <section class="screen" id="screen-settings">
+        <div class="page-heading"><div><p class="eyebrow">PREFERENCES</p><h1>Settings</h1><p class="muted">Manage your workspace preferences.</p></div></div>
+        <div class="settings-layout"><section class="panel settings-panel"><h2>Profile</h2><p class="muted">Your personal workspace information.</p><div class="profile-edit"><div class="avatar profile-avatar" id="settingsAvatar">U</div><div><strong id="settingsUserName">Your name</strong><p class="muted" id="settingsUserEmail">your email</p></div><span class="period-pill">Personal</span></div><div class="setting-row"><div><strong>Daily reminder</strong><p class="muted">Show a reminder to review your tasks.</p></div><label class="switch"><input id="reminderToggle" type="checkbox" checked><span class="switch-slider"></span></label></div><div class="setting-row"><div><strong>Compact task list</strong><p class="muted">Use a denser layout for task lists.</p></div><label class="switch"><input id="compactToggle" type="checkbox"><span class="switch-slider"></span></label></div><div class="setting-row"><div><strong>Appearance</strong><p class="muted">Switch between light and dark mode.</p></div><select id="themeSelect" class="theme-select" aria-label="Choose appearance"><option value="light">☀ Day mode</option><option value="dark">☾ Night mode</option></select></div><div class="setting-row"><div><strong>Save data on this device</strong><p class="muted">Tasks are stored in this browser using local storage.</p></div><span class="saved-status">● Active</span></div><div class="settings-actions"><button class="secondary-button" id="exportButton">Export tasks (.json)</button><button class="danger-button" id="clearButton">Clear all tasks</button><button class="secondary-button" id="logoutButton">Sign out</button></div></section><aside class="panel about-panel"><div class="about-icon">✓</div><h2>About TaskFlow</h2><p class="muted">A simple space to capture ideas, organize priorities, and turn plans into progress.</p><div class="about-meta"><span>Version</span><strong>1.0.0</strong></div><div class="about-meta"><span>Design</span><strong>Purple & white</strong></div></aside></div>
+      </section>
+      <footer class="footer">Made for focused days <span>✦</span> TaskFlow © 2026</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

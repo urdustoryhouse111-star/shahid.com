@@ -1,0 +1,10 @@
+TASKFLOW SUBMISSION CHECKLIST
+[ ] Test demo login (valid email + any non-empty password).
+[ ] Test day mode and night mode from Settings.
+[ ] Test all five main application screens.
+[ ] Add, edit, complete and delete a test task.
+[ ] Check search, filters and calendar.
+[ ] Capture screenshots of Login, Dashboard, My Tasks, Add Task, Calendar and Settings.
+[ ] Add your name, class and student details to the report if required.
+[ ] Submit the project ZIP/folder, screenshots and PDF report.
+NOTE: Login is a front-end demo, not secure authentication.
